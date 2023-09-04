@@ -12,11 +12,14 @@
 
       const loader = new Loader();
 
-      loader.addImage('tank', './static/tanchik.jpg');
-      loader.addJson('presons', './static/persons.json');
+      loader.addImage('tank', './static/tank.jpg');
+      loader.addJson('persons', './static/persons.json');
 
       loader.load(() => {
-        console.log('Images loaded');
+        const image = loader.getImage('tank');
+        document.body.append(image);
+        const json = loader.getJson('persons');
+        console.log(json);
       });
 
       // Loader.loadImage('./static/tanchik.jpg').then((img) =>
