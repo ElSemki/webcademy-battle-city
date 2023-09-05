@@ -25,17 +25,21 @@
       this.loadOrder.jsons.push({ name, address });
     }
 
+    //* Метод для извлечения image
     getImage(name) {
       return this.resources.images[name];
     }
 
+    //* Метод для извлечения json
     getJson(name) {
       return this.resources.jsons[name];
     }
 
+    //* Метод для загрузки данных из очереди в ресурсы
     load(callback) {
       const promises = [];
 
+      //* Перебираем каждый массив в очереди и загружаем еге (передаем из очереди в ресурсы)
       for (const imageData of this.loadOrder.images) {
         const { name, src } = imageData;
         const promise = Loader.loadImage(src).then((image) => {
@@ -62,6 +66,7 @@
       Promise.all(promises).then(callback);
     }
 
+    //* Статический метод загрузки изображения (берет данные из очереди)
     static loadImage(src) {
       return new Promise((resolve, reject) => {
         try {
@@ -74,6 +79,7 @@
       });
     }
 
+    //* Статический метод загрузки json (берет данные из очереди)
     static loadJson(address) {
       return new Promise((resolve, reject) => {
         fetch(address)

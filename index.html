@@ -6,25 +6,55 @@
     <title>Battle City</title>
   </head>
   <body>
+    <script src="engine/Container.js"></script>
     <script src="engine/Loader.js"></script>
+    <script src="engine/Renderer.js"></script>
+    <script src="engine/Sprite.js"></script>
+
     <script>
-      const { Loader } = GameEngine;
+      const { Loader, Renderer, Sprite } = GameEngine;
+
+      let sprite;
 
       const loader = new Loader();
+      const renderer = new Renderer({
+        width: 500,
+        height: 500,
+        background: 'purple',
+
+        update(timestamp) {
+          if (!sprite) {
+            return;
+          }
+
+          // sprite.frame.x =
+          //   sprite.texture.width / 2 + 100 * Math.cos(timestamp / 100);
+          // sprite.frame.y =
+          //   sprite.texture.height / 2 + 100 * Math.sin(timestamp / 100);
+        },
+      });
+
+      document.body.append(renderer.canvas);
 
       loader.addImage('tank', './static/tank.jpg');
       loader.addJson('persons', './static/persons.json');
 
       loader.load(() => {
-        const image = loader.getImage('tank');
-        document.body.append(image);
-        const json = loader.getJson('persons');
-        console.log(json);
-      });
+        sprite = new Sprite(loader.getImage('tank'), {
+          x: 0,
+          y: 0,
+          width: 100,
+          height: 100,
+        });
+        renderer.stage.add(sprite);
 
-      // Loader.loadImage('./static/tanchik.jpg').then((img) =>
-      //   document.body.append(img)
-      // );
+        // sprite.frame.x = 450;
+        // sprite.frame.y = 100;
+        // sprite.frame.width = 250;
+        // sprite.frame.height = 250;
+        // sprite.width = 250;
+        // sprite.height = 250;
+      });
     </script>
   </body>
 </html>
